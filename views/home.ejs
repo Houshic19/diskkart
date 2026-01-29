@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiskKart - Computer Hardware Store</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .carousel-item {
+      height: 400px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .carousel-item img {
+      object-fit: cover;
+    }
+    .carousel-caption {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 5px;
+    }
+    .product-card {
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid #ddd;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .category-badge {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+    .price-tag {
+      font-size: 24px;
+      font-weight: bold;
+      color: #28a745;
+    }
+    .product-img {
+      background: #f0f0f0;
+      height: 200px;
+      object-fit: cover;
+      width: 100%;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="/">
+      <i class="fas fa-server"></i> DiskKart
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/category/Storage">Storage</a></li>
+        <li class="nav-item"><a class="nav-link" href="/category/RAM">RAM</a></li>
+        <li class="nav-item"><a class="nav-link" href="/category/Graphics Card">GPU</a></li>
+        <li class="nav-item"><a class="nav-link" href="/category/Motherboard">Motherboards</a></li>
+        <li class="nav-item"><a class="nav-link" href="/category/Accessories">Accessories</a></li>
+        <li class="nav-item"><a class="nav-link" href="/cart"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+        <% if(user) { %>
+          <li class="nav-item"><a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        <% } else { %>
+          <li class="nav-item"><a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Carousel -->
+<div id="heroCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="d-flex align-items-center justify-content-center h-100" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="text-center text-white">
+          <h1 class="display-4 fw-bold">🔥 Exclusive Storage Deals</h1>
+          <p class="lead">High-speed SSDs & HDDs at unbeatable prices</p>
+          <a href="/category/Storage" class="btn btn-light btn-lg">Shop Storage</a>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="d-flex align-items-center justify-content-center h-100" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+        <div class="text-center text-white">
+          <h1 class="display-4 fw-bold">⚡ High-Performance GPUs</h1>
+          <p class="lead">Latest NVIDIA & AMD graphics cards in stock</p>
+          <a href="/category/Graphics Card" class="btn btn-light btn-lg">Shop GPUs</a>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="d-flex align-items-center justify-content-center h-100" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+        <div class="text-center text-white">
+          <h1 class="display-4 fw-bold">🚀 All Computer Hardware</h1>
+          <p class="lead">Everything you need for your PC build</p>
+          <a href="/" class="btn btn-light btn-lg">Browse All</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Search Box -->
+  <div class="row mb-5">
+    <div class="col-md-8 mx-auto">
+      <form class="d-flex gap-2" action="/search">
+        <input class="form-control form-control-lg" name="q" placeholder="🔍 Search products...">
+        <button class="btn btn-primary btn-lg" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="row mb-5">
+    <% if(p && p.length > 0) { %>
+      <% p.forEach(x => { %>
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+          <div class="card product-card h-100 shadow-sm">
+            <% if(x.image) { %>
+              <img src="<%= x.image %>" class="product-img" alt="<%= x.name %>" onerror="this.src='https://via.placeholder.com/200?text=<%= encodeURIComponent(x.name) %>'">
+            <% } else { %>
+              <div class="product-img d-flex align-items-center justify-content-center">
+                <i class="fas fa-image" style="font-size: 2rem; color: #ccc;"></i>
+              </div>
+            <% } %>
+            <div class="card-body">
+              <span class="category-badge"><%= x.category %></span>
+              <h5 class="card-title"><%= x.name %></h5>
+              <p class="card-text text-muted small"><%= x.subcategory %></p>
+              <% if(x.description) { %>
+                <p class="card-text small text-secondary"><%= x.description.substring(0, 60) %>...</p>
+              <% } %>
+              <div class="price-tag">₹<%= x.price %></div>
+              <a href="/product/<%= x.id %>" class="btn btn-primary btn-sm w-100 mt-3">
+                <i class="fas fa-eye"></i> View Details
+              </a>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <div class="col-12 text-center">
+        <p class="lead text-muted">No products available</p>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<footer class="bg-dark text-white mt-5 py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5>DiskKart</h5>
+        <p>Your trusted source for premium computer hardware since 2020</p>
+      </div>
+      <div class="col-md-4">
+        <h5>Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="/" class="text-light">Home</a></li>
+          <li><a href="/category/Storage" class="text-light">Storage</a></li>
+          <li><a href="/category/RAM" class="text-light">RAM</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5>Contact</h5>
+        <p>📧 support@diskkart.com</p>
+        <p>📞 1-800-DISKART</p>
+      </div>
+    </div>
+    <hr class="bg-light">
+    <p class="text-center mb-0">© 2026 DiskKart. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

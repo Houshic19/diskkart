@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - DiskKart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      padding: 40px;
+      max-width: 400px;
+      width: 100%;
+    }
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .login-header h1 {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+    }
+    .login-header p {
+      color: #666;
+      margin-top: 5px;
+    }
+    .form-control {
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+    }
+    .btn-login {
+      width: 100%;
+      padding: 12px;
+      font-weight: bold;
+      font-size: 16px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+    }
+    .login-link a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .demo-creds {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+    .demo-creds p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-container">
+  <div class="login-header">
+    <h1><i class="fas fa-server"></i> DiskKart</h1>
+    <p>Sign in to your account</p>
+  </div>
+
+  <div class="demo-creds">
+    <p><strong>Test Credentials:</strong></p>
+    <p>👤 user / user123</p>
+    <p>⚙️ admin / admin123</p>
+  </div>
+
+  <form method="POST" action="/login">
+    <input type="text" class="form-control" name="username" placeholder="Username" required>
+    <input type="password" class="form-control" name="password" placeholder="Password" required>
+    <button type="submit" class="btn btn-primary btn-login">
+      <i class="fas fa-sign-in-alt"></i> Sign In
+    </button>
+  </form>
+
+  <div class="login-link">
+    Don't have an account? <a href="/register">Register here</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
