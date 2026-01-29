@@ -7,3 +7,6 @@ diskkart.db
 .DS_Store
 .vscode/
 .idea/
+db/*.db
+node_modules/
+.env
