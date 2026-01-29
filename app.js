@@ -1,3 +1,21 @@
+const fs = require("fs");
+const sqlite3 = require("sqlite3").verbose();
+
+const DB_PATH = "./db/diskkart.db";
+const INIT_SQL = "./db/diskkart.sql";
+
+if (!fs.existsSync("./db")) {
+  fs.mkdirSync("./db");
+}
+
+if (!fs.existsSync(DB_PATH)) {
+  console.log("Initializing database...");
+  const db = new sqlite3.Database(DB_PATH);
+  const initSQL = fs.readFileSync(INIT_SQL, "utf8");
+  db.exec(initSQL);
+  db.close();
+}
+
 require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
